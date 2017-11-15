@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/plain');
+
 $user = 'maxux';
 if($_SERVER['REQUEST_URI'] != '/')
 	$user = substr($_SERVER['REQUEST_URI'], 1);
