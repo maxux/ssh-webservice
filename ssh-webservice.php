@@ -2,7 +2,7 @@
 header('Content-Type: text/plain');
 
 $user = 'maxux';
-$expr = 'END';
+$expr = 'NR==1';
 if($_SERVER['REQUEST_URI'] != '/') {
     $paths = explode("/", $_SERVER['REQUEST_URI']);
     $user = $paths[1];
