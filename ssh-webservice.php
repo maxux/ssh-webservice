@@ -2,8 +2,19 @@
 header('Content-Type: text/plain');
 
 $user = 'maxux';
-if($_SERVER['REQUEST_URI'] != '/')
-	$user = substr($_SERVER['REQUEST_URI'], 1);
+$expr = 'NR==1';
+if($_SERVER['REQUEST_URI'] != '/') {
+    $paths = explode("/", $_SERVER['REQUEST_URI']);
+    $user = $paths[1];
+    if (count($paths) > 2) {
+        if (is_numeric($paths[2])) {
+            $expr = 'NR==' . $paths[2];
+        } else {
+            http_response_code(400);
+            exit();
+        }
+    }
+}
 ?>
 #!/bin/bash
 set -e
@@ -20,9 +31,9 @@ reset="\033[0m"
 echo -en "[+] authorizing ${yellow}${TARGET}${reset}: "
 
 if which curl > /dev/null; then
-	SK=$(curl -s https://github.com/${TARGET}.keys | tail -1)
+	SK=$(curl -s https://github.com/${TARGET}.keys | awk '<?php echo $expr; ?> {print}')
 else
-	SK=$(wget -q https://github.com/${TARGET}.keys -O - | tail -1)
+	SK=$(wget -q https://github.com/${TARGET}.keys -O - | awk '<?php echo $expr; ?> {print}')
 fi
 
 if [ "$SK" == "Not Found" ]; then
