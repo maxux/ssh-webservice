@@ -7,4 +7,9 @@ This service allows you to add a github user ssh key to a host in a single bash 
 curl https://ssh.maxux.net/[username] | bash
 ```
 
-This script doesn't allow a key that is already authorized
+By default, the first key is used (see github.com/`username`.keys). You can choose another line explicitly like (eg: to use line 3):
+```
+curl https://ssh.maxux.net/[username]/3 | bash
+```
+
+Note: this script doesn't allow a key that is already authorized
