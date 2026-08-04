@@ -15,7 +15,7 @@ class SSHWebAuth:
     def listen(self):
         self.app.run(host="0.0.0.0", port=3000, debug=True, threaded=True)
 
-if __name__ == "webssh":
+if __name__ == "sshsrv":
     print("[+] wsgi: initializing ssh-webservice application")
 
     root = SSHWebAuth()
